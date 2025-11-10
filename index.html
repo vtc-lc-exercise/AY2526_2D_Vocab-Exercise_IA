@@ -247,7 +247,9 @@
             -webkit-user-select: none;
             user-select: none;
             -webkit-touch-callout: none;
-            touch-action: none;}
+            touch-action: none;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);}
 
         .draggable-word:hover {
             transform: scale(1.1);
@@ -822,8 +824,8 @@
                 word.addEventListener('dragend', handleDragEnd);
             });
 
-        // Add touch support for mobile devices (iOS Safari)
-        let touchStartX, touchStartY, touchedElement;
+        // Optimized touch support for mobile (iOS Safari) - hardware accelerated
+        let touchStartX, touchStartY, touchedElement, dropZoneCache;
 
         draggables.forEach(word => {
             word.addEventListener('touchstart', function(e) {
@@ -832,28 +834,22 @@
                 const touch = e.touches[0];
                 touchStartX = touch.clientX;
                 touchStartY = touch.clientY;
-                e.preventDefault(); // Prevent iOS text selection/search
+                e.preventDefault();
+
+                // Cache drop zones for performance
+                dropZoneCache = Array.from(document.querySelectorAll('.drop-zone'));
             }, { passive: false });
 
             word.addEventListener('touchmove', function(e) {
-                e.preventDefault(); // Prevent scrolling while dragging
+                e.preventDefault();
                 const touch = e.touches[0];
                 const moveX = touch.clientX - touchStartX;
                 const moveY = touch.clientY - touchStartY;
 
-                // Move the element
-                this.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                // Use translate3d for GPU hardware acceleration (much faster)
+                this.style.transform = `translate3d(${moveX}px, ${moveY}px, 0)`;
                 this.style.zIndex = '1000';
-
-                // Find drop zone under touch point
-                const elementsUnderTouch = document.elementsFromPoint(touch.clientX, touch.clientY);
-                const dropZone = elementsUnderTouch.find(el => el.classList.contains('drop-zone'));
-
-                // Highlight drop zone
-                document.querySelectorAll('.drop-zone').forEach(zone => zone.classList.remove('drag-over'));
-                if (dropZone) {
-                    dropZone.classList.add('drag-over');
-                }
+                this.style.willChange = 'transform';
             }, { passive: false });
 
             word.addEventListener('touchend', function(e) {
@@ -861,23 +857,26 @@
                 this.classList.remove('dragging');
                 this.style.transform = '';
                 this.style.zIndex = '';
+                this.style.willChange = '';
 
                 const touch = e.changedTouches[0];
-                const elementsUnderTouch = document.elementsFromPoint(touch.clientX, touch.clientY);
-                const dropZone = elementsUnderTouch.find(el => el.classList.contains('drop-zone'));
+
+                // Find drop zone at touch position
+                const dropZone = dropZoneCache.find(zone => {
+                    const rect = zone.getBoundingClientRect();
+                    return touch.clientX >= rect.left && touch.clientX <= rect.right &&
+                           touch.clientY >= rect.top && touch.clientY <= rect.bottom;
+                });
 
                 if (dropZone && touchedElement) {
-                    // Perform the drop action
                     const section = dropZone.getAttribute('data-section');
                     if (dropZone.children.length > 0) {
                         const existingWord = dropZone.children[0];
                         document.getElementById(section + 'Bank').appendChild(existingWord);
                     }
                     dropZone.appendChild(touchedElement);
-                    dropZone.classList.remove('drag-over');
                 }
 
-                document.querySelectorAll('.drop-zone').forEach(zone => zone.classList.remove('drag-over'));
                 touchedElement = null;
             }, { passive: false });
         });
