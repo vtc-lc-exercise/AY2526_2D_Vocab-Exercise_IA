@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocabulary Exercises</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Animated background patterns */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 1px, transparent 1px),
+                radial-gradient(circle at 80% 80%, rgba(255,255,255,0.1) 1px, transparent 1px),
+                radial-gradient(circle at 40% 20%, rgba(255,255,255,0.08) 1px, transparent 1px);
+            background-size: 50px 50px, 80px 80px, 100px 100px;
+            animation: float 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(45deg, transparent 48%, rgba(255,255,255,0.05) 50%, transparent 52%),
+                linear-gradient(-45deg, transparent 48%, rgba(255,255,255,0.05) 50%, transparent 52%);
+            background-size: 100px 100px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            border-left: 6px solid #667eea;
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .header h2 {
+            color: #764ba2;
+            font-size: 1.4em;
+            margin-bottom: 8px;
+        }
+
+        .header h3 {
+            color: #555;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+
+        .header h4 {
+            color: #666;
+            font-size: 1em;
+        }
+
+        /* Menu Page */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .toc-container {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .toc-title {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .toc-subtitle {
+            color: #666;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.05em;
+        }
+
+        .exercise-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid #667eea;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .exercise-card:hover {
+            transform: translateX(10px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .exercise-number {
+            color: #667eea;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .exercise-title {
+            color: #764ba2;
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .exercise-description {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .exercise-details {
+            color: #666;
+            font-size: 0.95em;
+            font-style: italic;
+        }
+
+        /* Exercise Section */
+        .exercise-section {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            color: #667eea;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .exercise-instructions {
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            padding: 15px;
+            border-radius: 12px;
+        }
+
+        /* Drag and Drop Sections */
+        .drag-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border-left: 4px solid #764ba2;
+        }
+
+        .drag-section-title {
+            color: #764ba2;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .drag-drop-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .word-bank {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 15px;
+            border-radius: 12px;
+            min-height: 150px;
+        }
+
+        .word-bank h4 {
+            color: #764ba2;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .draggable-word {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 20px;
+            cursor: move;
+            user-select: none;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .draggable-word:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
+        }
+
+        .draggable-word.dragging {
+            opacity: 0.5;
+        }
+
+        .sentence-container {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .sentence {
+            margin-bottom: 15px;
+            line-height: 2;
+            font-size: 1.05em;
+        }
+
+        .drop-zone {
+            display: inline-block;
+            min-width: 120px;
+            padding: 5px 10px;
+            border: 2px dashed #667eea;
+            border-radius: 8px;
+            background: #f0f4ff;
+            margin: 0 5px;
+            min-height: 30px;
+            vertical-align: middle;
+        }
+
+        .drop-zone.drag-over {
+            background: #e0e7ff;
+            border-color: #764ba2;
+        }
+
+        .drop-zone .draggable-word {
+            margin: 0;
+        }
+
+        /* Multiple Choice */
+        .question {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            color: #333;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {
+            background: white;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: #e0e7ff;
+        }
+
+        .option.correct {
+            border-color: #4caf50;
+            background: #e8f5e9;
+        }
+
+        .option.incorrect {
+            border-color: #f44336;
+            background: #ffebee;
+        }
+
+        .option input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            display: none;
+            line-height: 1.6;
+        }
+
+        .feedback.correct {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #4caf50;
+        }
+
+        .feedback.incorrect {
+            background: #ffebee;
+            color: #c62828;
+            border: 2px solid #f44336;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 30px;
+            font-size: 1em;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            margin: 10px 5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+        }
+
+        .score-display {
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+            color: #764ba2;
+            font-weight: bold;
+        }
+
+        .back-to-menu {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s;
+            z-index: 1000;
+            font-weight: bold;
+        }
+
+        .back-to-menu:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            .drag-drop-container {
+                grid-template-columns: 1fr;
+            }
+            .header h1 { font-size: 1.5em; }
+            .header h2 { font-size: 1.2em; }
+            .section-title { font-size: 1.2em; }
+            .back-to-menu {
+                bottom: 20px;
+                right: 20px;
+                padding: 10px 15px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Youth College</h1>
+            <h2>Language Centre</h2>
+            <h3>Vocational English 2D: Workplace Writing II</h3>
+            <h4>Vocabulary Building Exercises - AY2526</h4>
+        </div>
+
+        <!-- Menu Page -->
+        <div class="page active" id="menuPage">
+            <div class="toc-container">
+                <h2 class="toc-title">📚 Choose Your Exercise</h2>
+                <p class="toc-subtitle">Select an exercise below to begin practising</p>
+
+                <div class="exercise-card" onclick="showPage('exercise1Page')">
+                    <div class="exercise-number">Exercise 1</div>
+                    <div class="exercise-title">Drag and Drop - Word Usage</div>
+                    <div class="exercise-description">
+                        Drag vocabulary words to complete sentences in engineering workplace contexts. Practice identifying and using words correctly.
+                    </div>
+                    <div class="exercise-details">
+                        8 sections • 5 questions each • All 40 vocabulary words
+                    </div>
+                </div>
+
+                <div class="exercise-card" onclick="showPage('exercise2Page')">
+                    <div class="exercise-number">Exercise 2</div>
+                    <div class="exercise-title">Multiple Choice - Active vs Passive Voice</div>
+                    <div class="exercise-description">
+                        Choose between active and passive voice forms of verbs. Learn when to use each voice in professional engineering writing.
+                    </div>
+                    <div class="exercise-details">
+                        10 questions • Detailed explanations • Instant feedback
+                    </div>
+                </div>
+
+                <div class="exercise-card" onclick="showPage('exercise3Page')">
+                    <div class="exercise-number">Exercise 3</div>
+                    <div class="exercise-title">Multiple Choice - Verb Forms</div>
+                    <div class="exercise-description">
+                        Master the correct verb forms after modal verbs and connectives. Essential grammar for technical writing.
+                    </div>
+                    <div class="exercise-details">
+                        12 questions • Detailed explanations • Score tracking
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Exercise 1: Drag and Drop -->
+        <div class="page" id="exercise1Page">
+            <div class="exercise-section">
+                <div class="section-title">Exercise 1: Word Usage</div>
+                <div class="exercise-instructions">
+                    <strong>Instructions:</strong> Drag the correct word from the word bank to complete each sentence. All sentences relate to engineering workplace contexts.
+                </div>
+
+                <!-- Section 1: Nouns 1-5 -->
+                <div class="drag-section">
+                    <div class="drag-section-title">Section 1: Workplace Issues</div>
+                    <div class="drag-drop-container">
+                        <div class="word-bank">
+                            <h4>Word Bank</h4>
+                            <div class="section-bank" id="bank1">
+                                <span class="draggable-word" draggable="true" data-word="battery">battery</span>
+                                <span class="draggable-word" draggable="true" data-word="concern">concern</span>
+                                <span class="draggable-word" draggable="true" data-word="construction">construction</span>
+                                <span class="draggable-word" draggable="true" data-word="coordination">coordination</span>
+                                <span class="draggable-word" draggable="true" data-word="delay">delay</span>
+                            </div>
+                        </div>
+                        <div class="sentence-container">
+                            <div class="sentence">
+                                1. The <span class="drop-zone" data-answer="battery" data-section="1"></span> life of the equipment needs improvement.
+                            </div>
+                            <div class="sentence">
+                                2. Safety is our main <span class="drop-zone" data-answer="concern" data-section="1"></span> during the project.
+                            </div>
+                            <div class="sentence">
+                                3. The <span class="drop-zone" data-answer="construction" data-section="1"></span> of the new facility will begin next month.
+                            </div>
+                            <div class="sentence">
+                                4. Better <span class="drop-zone" data-answer="coordination" data-section="1"></span> between teams is essential.
+                            </div>
+                            <div class="sentence">
+                                5. The project <span class="drop-zone" data-answer="delay" data-section="1"></span> was caused by supply issues.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2: Nouns 6-10 -->
+                <div class="drag-section">
+                    <div class="drag-section-title">Section 2: Resources and Operations</div>
+                    <div class="drag-drop-container">
+                        <div class="word-bank">
+                            <h4>Word Bank</h4>
+                            <div class="section-bank" id="bank2">
+                                <span class="draggable-word" draggable="true" data-word="difficulty">difficulty</span>
+                                <span class="draggable-word" draggable="true" data-word="expense">expense</span>
+                                <span class="draggable-word" draggable="true" data-word="exposure">exposure</span>
+                                <span class="draggable-word" draggable="true" data-word="facility">facility</span>
+                                <span class="draggable-word" draggable="true" data-word="feedback">feedback</span>
+                            </div>
+                        </div>
+                        <div class="sentence-container">
+                            <div class="sentence">
+                                6. We encountered a technical <span class="drop-zone" data-answer="difficulty" data-section="2"></span> yesterday.
+                            </div>
+                            <div class="sentence">
+                                7. The <span class="drop-zone" data-answer="expense" data-section="2"></span> of the repairs exceeded our budget.
+                            </div>
+                            <div class="sentence">
+                                8. Prolonged <span class="drop-zone" data-answer="exposure" data-section="2"></span> to high temperatures damages components.
+                            </div>
+                            <div class="sentence">
+                                9. The manufacturing <span class="drop-zone" data-answer="facility" data-section="2"></span> operates 24 hours a day.
+                            </div>
+                            <div class="sentence">
+                                10. Employee <span class="drop-zone" data-answer="feedback" data-section="2"></span> helped improve our processes.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 3: Nouns 11-15 -->
+                <div class="drag-section">
+                    <div class="drag-section-title">Section 3: Management and Systems</div>
+                    <div class="drag-drop-container">
+                        <div class="word-bank">
+                            <h4>Word Bank</h4>
+                            <div class="section-bank" id="bank3">
+                                <span class="draggable-word" draggable="true" data-word="implementation">implementation</span>
+                                <span class="draggable-word" draggable="true" data-word="maintenance">maintenance</span>
+                                <span class="draggable-word" draggable="true" data-word="relief">relief</span>
+                                <span class="draggable-word" draggable="true" data-word="solution">solution</span>
+                                <span class="draggable-word" draggable="true" data-word="supervision">supervision</span>
+                            </div>
+                        </div>
+                        <div class="sentence-container">
+                            <div class="sentence">
+                                11. The <span class="drop-zone" data-answer="implementation" data-section="3"></span> of new safety measures is underway.
+                            </div>
+                            <div class="sentence">
+                                12. Regular <span class="drop-zone" data-answer="maintenance" data-section="3"></span> prevents equipment failures.
+                            </div>
+                            <div class="sentence">
+                                13. The new ventilation system provides <span class="drop-zone" data-answer="relief" data-section="3"></span> from heat.
+                            </div>
+                            <div class="sentence">
+                                14. Engineers proposed an innovative <span class="drop-zone" data-answer="solution" data-section="3"></span> to the problem.
+                            </div>
+                            <div class="sentence">
+                                15. Proper <span class="drop-zone" data-answer="supervision" data-section="3"></span> ensures quality control.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 4: Nouns 16-17 + Verbs 18-20 -->
+                <div class="drag-section">
+                    <div class="drag-section-title">Section 4: Conditions and Actions</div>
+                    <div class="drag-drop-container">
+                        <div class="word-bank">
+                            <h4>Word Bank</h4>
+                            <div class="section-bank" id="bank4">
+                                <span class="draggable-word" draggable="true" data-word="temperature">temperature</span>
+                                <span class="draggable-word" draggable="true" data-word="usage">usage</span>
+                                <span class="draggable-word" draggable="true" data-word="affect">affect</span>
+                                <span class="draggable-word" draggable="true" data-word="collect">collect</span>
+                                <span class="draggable-word" draggable="true" data-word="demonstrate">demonstrate</span>
+                            </div>
+                        </div>
+                        <div class="sentence-container">
+                            <div class="sentence">
+                                16. The <span class="drop-zone" data-answer="temperature" data-section="4"></span> in the facility must remain constant.
+                            </div>
+                            <div class="sentence">
+                                17. Excessive <span class="drop-zone" data-answer="usage" data-section="4"></span> of resources increases costs.
+                            </div>
+                            <div class="sentence">
+                                18. High humidity levels <span class="drop-zone" data-answer="affect" data-section="4"></span> equipment performance.
+                            </div>
+                            <div class="sentence">
+                                19. Technicians <span class="drop-zone" data-answer="collect" data-section="4"></span> data from all sensors daily.
+                            </div>
+                            <div class="sentence">
+                                20. Engineers must <span class="drop-zone" data-answer="demonstrate" data-section="4"></span> the new system to clients.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 5: Verbs 21-25 -->
+                <div class="drag-section">
+                    <div class="drag-section-title">Section 5: Process Improvement</div>
+                    <div class="drag-drop-container">
+                        <div class="word-bank">
+                            <h4>Word Bank</h4>
+                            <div class="section-bank" id="bank5">
+                                <span class="draggable-word" draggable="true" data-word="gather">gather</span>
+                                <span class="draggable-word" draggable="true" data-word="improve">improve</span>
+                                <span class="draggable-word" draggable="true" data-word="induce">induce</span>
+                                <span class="draggable-word" draggable="true" data-word="lower">lower</span>
+                                <span class="draggable-word" draggable="true" data-word="obtain">obtain</span>
+                            </div>
+                        </div>
+                        <div class="sentence-container">
+                            <div class="sentence">
+                                21. Managers will <span class="drop-zone" data-answer="gather" data-section="5"></span> information before making decisions.
+                            </div>
+                            <div class="sentence">
+                                22. We need to <span class="drop-zone" data-answer="improve" data-section="5"></span> our production efficiency.
+                            </div>
+                            <div class="sentence">
+                                23. Poor lighting can <span class="drop-zone" data-answer="induce" data-section="5"></span> eye strain in workers.
+                            </div>
+                            <div class="sentence">
+                                24. The company aims to <span class="drop-zone" data-answer="lower" data-section="5"></span> operational costs.
+                            </div>
+                            <div class="sentence">
+                                25. We must <span class="drop-zone" data-answer="obtain" data-section="5"></span> approval before proceeding.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 6: Verbs 26-29 + Adj 30 -->
+                <div class="drag-section">
+                    <div class="drag-section-title">Section 6: Support and Requirements</div>
+                    <div class="drag-drop-container">
+                        <div class="word-bank">
+                            <h4>Word Bank</h4>
+                            <div class="section-bank" id="bank6">
+                                <span class="draggable-word" draggable="true" data-word="provide">provide</span>
+                                <span class="draggable-word" draggable="true" data-word="recharge">recharge</span>
+                                <span class="draggable-word" draggable="true" data-word="reduce">reduce</span>
+                                <span class="draggable-word" draggable="true" data-word="require">require</span>
+                                <span class="draggable-word" draggable="true" data-word="additional">additional</span>
+                            </div>
+                        </div>
+                        <div class="sentence-container">
+                            <div class="sentence">
+                                26. The company will <span class="drop-zone" data-answer="provide" data-section="6"></span> training for all staff.
+                            </div>
+                            <div class="sentence">
+                                27. Remember to <span class="drop-zone" data-answer="recharge" data-section="6"></span> the batteries before use.
+                            </div>
+                            <div class="sentence">
+                                28. New technology helps <span class="drop-zone" data-answer="reduce" data-section="6"></span> waste production.
+                            </div>
+                            <div class="sentence">
+                                29. Complex projects <span class="drop-zone" data-answer="require" data-section="6"></span> careful planning and resources.
+                            </div>
+                            <div class="sentence">
+                                30. We need <span class="drop-zone" data-answer="additional" data-section="6"></span> equipment for the expansion.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 7: Adjectives 31-35 -->
+                <div class="drag-section">
+                    <div class="drag-section-title">Section 7: Standards and Efficiency</div>
+                    <div class="drag-drop-container">
+                        <div class="word-bank">
+                            <h4>Word Bank</h4>
+                            <div class="section-bank" id="bank7">
+                                <span class="draggable-word" draggable="true" data-word="applicable">applicable</span>
+                                <span class="draggable-word" draggable="true" data-word="effective">effective</span>
+                                <span class="draggable-word" draggable="true" data-word="frequent">frequent</span>
+                                <span class="draggable-word" draggable="true" data-word="helpful">helpful</span>
+                                <span class="draggable-word" draggable="true" data-word="immediate">immediate</span>
+                            </div>
+                        </div>
+                        <div class="sentence-container">
+                            <div class="sentence">
+                                31. These safety rules are <span class="drop-zone" data-answer="applicable" data-section="7"></span> to all departments.
+                            </div>
+                            <div class="sentence">
+                                32. The new method proved highly <span class="drop-zone" data-answer="effective" data-section="7"></span> in practice.
+                            </div>
+                            <div class="sentence">
+                                33. <span class="drop-zone" data-answer="frequent" data-section="7"></span> inspections maintain high standards.
+                            </div>
+                            <div class="sentence">
+                                34. The supervisor's advice was very <span class="drop-zone" data-answer="helpful" data-section="7"></span>.
+                            </div>
+                            <div class="sentence">
+                                35. The issue requires <span class="drop-zone" data-answer="immediate" data-section="7"></span> attention from management.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 8: Adj 36-37 + Adv 38-39 -->
+                <div class="drag-section">
+                    <div class="drag-section-title">Section 8: Progress and Results</div>
+                    <div class="drag-drop-container">
+                        <div class="word-bank">
+                            <h4>Word Bank</h4>
+                            <div class="section-bank" id="bank8">
+                                <span class="draggable-word" draggable="true" data-word="initial">initial</span>
+                                <span class="draggable-word" draggable="true" data-word="ongoing">ongoing</span>
+                                <span class="draggable-word" draggable="true" data-word="greatly">greatly</span>
+                                <span class="draggable-word" draggable="true" data-word="significantly">significantly</span>
+                            </div>
+                        </div>
+                        <div class="sentence-container">
+                            <div class="sentence">
+                                36. The <span class="drop-zone" data-answer="initial" data-section="8"></span> test results were promising.
+                            </div>
+                            <div class="sentence">
+                                37. Quality improvement is an <span class="drop-zone" data-answer="ongoing" data-section="8"></span> process.
+                            </div>
+                            <div class="sentence">
+                                38. The new system has <span class="drop-zone" data-answer="greatly" data-section="8"></span> improved productivity.
+                            </div>
+                            <div class="sentence">
+                                39. Costs have decreased <span class="drop-zone" data-answer="significantly" data-section="8"></span> this quarter.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" onclick="checkAllDragDrop()">Check All Answers</button>
+                <button class="btn btn-secondary" onclick="resetAllDragDrop()">Reset All</button>
+                <div id="dragDropScore" class="score-display" style="display:none;"></div>
+            </div>
+            <a href="#" class="back-to-menu" onclick="showPage('menuPage'); return false;">📋 Menu</a>
+        </div>
+
+        <!-- Exercise 2: Active vs Passive Voice -->
+        <div class="page" id="exercise2Page">
+            <div class="exercise-section">
+                <div class="section-title">Exercise 2: Active vs Passive Voice</div>
+                <div class="exercise-instructions">
+                    <strong>Instructions:</strong> Choose the correct form to complete each sentence. You will receive detailed explanations for your answers.
+                </div>
+
+                <div class="question" data-correct="a" data-explanation-correct="Correct! 'Developed' is active voice. The team (subject) performs the action. Active voice is used when the focus is on who did the action." data-explanation-wrong="The correct answer is 'developed'. This sentence uses active voice because the team (subject) performs the action. We use active voice when emphasizing who did the action, not what was done.">
+                    <div class="question-text">
+                        1. The engineering team __________ the new battery system last quarter.
+                    </div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q1" value="a"> developed
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="b"> was developed
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="c"> has been developed
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <div class="question" data-correct="a" data-explanation-correct="Correct! 'Collect' is active voice. The supervisors (subject) perform the action regularly. Active voice emphasizes who does the action." data-explanation-wrong="The correct answer is 'collect'. This is active voice because supervisors (subject) perform the action. Use active voice when the doer of the action is important and clear.">
+                    <div class="question-text">
+                        2. Supervisors __________ safety data from all departments weekly.
+                    </div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q2" value="a"> collect
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="b"> are collected
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="c"> have collected
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <div class="question" data-correct="b" data-explanation-correct="Correct! 'Is recharged' is passive voice. The equipment receives the action. Passive voice is used when the focus is on what happens, not who does it." data-explanation-wrong="The correct answer is 'is recharged'. This uses passive voice because the equipment (subject) receives the action. We use passive voice when the action itself is more important than who performs it.">
+                    <div class="question-text">
+                        3. The equipment __________ every morning before operations begin.
+                    </div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q3" value="a"> recharged
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="b"> is recharged
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="c"> recharging
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <div class="question" data-correct="a" data-explanation-correct="Correct! 'Reduces' is active voice. The system (subject) performs the action. Use active voice when the subject directly causes the result." data-explanation-wrong="The correct answer is 'reduces'. This is active voice because the system (subject) actively performs the action of reducing. The system is doing something, not having something done to it.">
+                    <div class="question-text">
+                        4. The new system __________ operational costs by 20%.
+                    </div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q4" value="a"> reduces
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="b"> is reduced
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="c"> was reducing
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <div class="question" data-correct="b" data-explanation-correct="Correct! 'Was gathered' is passive voice. The information (subject) receives the action. Passive voice emphasizes the action, not who did it." data-explanation-wrong="The correct answer is 'was gathered'. This uses passive voice because the information (subject) was collected by someone. The focus is on the information being gathered, not on who gathered it.">
+                    <div class="question-text">
+                        5. Critical information __________ from managers before the meeting.
+                    </div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q5" value="a"> gathered
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="b"> was gathered
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="c"> gathering
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <div class="question" data-correct="a" data-explanation-correct="Correct! 'Provide' is active voice. The engineers (subject) perform the action. Active voice shows who does the action clearly." data-explanation-wrong="The correct answer is 'provide'. This is active voice because the engineers (subject) actively give solutions. Active voice is clearer when showing who performs the action.">
+                    <div class="question-text">
+                        6. Our engineers __________ innovative solutions to complex problems.
+                    </div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q6" value="a"> provide
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q6" value="b"> are provided
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q6" value="c"> have providing
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <div class="question" data-correct="b" data-explanation-correct="Correct! 'Be induced' is passive voice with a modal verb (can). The fatigue (subject) receives the action. Use passive when the result matters more than the cause." data-explanation-wrong="The correct answer is 'be induced'. After modal verbs like 'can', we use 'be + past participle' for passive voice. The fatigue is caused by something, making it passive.">
+                    <div class="question-text">
+                        7. Worker fatigue can __________ by poor lighting conditions.
+                    </div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q7" value="a"> induced
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q7" value="b"> be induced
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q7" value="c"> inducing
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <div class="question" data-correct="a" data-explanation-correct="Correct! 'Affect' is active voice. The humidity levels (subject) perform the action. Use active voice when showing cause and effect clearly." data-explanation-wrong="The correct answer is 'affect'. This is active voice because humidity levels (subject) directly impact equipment. The levels are doing something to the equipment.">
+                    <div class="question-text">
+                        8. Humidity levels __________ the performance of electronic equipment.
+                    </div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q8" value="a"> affect
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q8" value="b"> are affected
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q8" value="c"> has affected
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <div class="question" data-correct="b" data-explanation-correct="Correct! 'Be demonstrated' is passive voice with must. The procedures (subject) receive the action. Passive emphasizes the requirement, not who demonstrates." data-explanation-wrong="The correct answer is 'be demonstrated'. After 'must', we use 'be + past participle' for passive voice. The procedures need to be shown, not do the showing.">
+                    <div class="question-text">
+                        9. All safety procedures must __________ during inspections.
+                    </div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q9" value="a"> demonstrate
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q9" value="b"> be demonstrated
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q9" value="c"> demonstrating
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <div class="question" data-correct="a" data-explanation-correct="Correct! 'Lowered' is active voice past tense. Management (subject) performed the action. Active voice shows clear responsibility for the action." data-explanation-wrong="The correct answer is 'lowered'. This is active voice because management (subject) took action to reduce costs. Active voice shows who accomplished the result.">
+                    <div class="question-text">
+                        10. Management __________ energy costs through better insulation.
+                    </div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q10" value="a"> lowered
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q10" value="b"> were lowered
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q10" value="c"> have lowering
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <button class="btn btn-primary" onclick="checkExercise2()">Check Answers</button>
+                <button class="btn btn-secondary" onclick="resetExercise2()">Reset</button>
+                <div id="ex2Score" class="score-display" style="display:none;"></div>
+            </div>
+            <a href="#" class="back-to-menu" onclick="showPage('menuPage'); return false;">📋 Menu</a>
+        </div>
+
+        <!-- Exercise 3: Verb Forms -->
+        <div class="page" id="exercise3Page">
+            <div class="exercise-section">
+                <div class="section-title">Exercise 3: Verb Forms</div>
+                <div class="exercise-instructions">
+                    <strong>Instructions:</strong> Choose the correct verb form to complete each sentence. You will receive detailed explanations for your answers.
+                </div>
+
+                <div class="question" data-correct="a" data-explanation-correct="Correct! After 'must', use the base form (require). Modal verbs are always followed by the base form of the verb, never infinitive with 'to'." data-explanation-wrong="The correct answer is 'require'. After modal verbs like 'must', 'should', 'can', always use the base form of the verb without 'to'. Never use 'to require' after a modal.">
+                    <div class="question-text">
+                        1. All engineers must __________ regular maintenance procedures.
+                    </div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q11" value="a"> require
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q11" value="b"> to require
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q11" value="c"> required
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <div class="question" data-correct="b" data-explanation-correct="Correct! After 'in order', use infinitive (to obtain). Connectives like 'in order to' and 'so as to' show purpose and require the infinitive form." data-explanation-wrong="The correct answer is 'to obtain'. After connectives like 'in order' and 'so as', we must use the infinitive form (to + verb) to show purpose or intention.">
+                    <div class="question-text">
+                        2. The company installed new sensors in order __________ temperature accurately.
+                    </div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q12" value="a"> obtain
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q12" value="b"> to obtain
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q12" value="c"> obtaining
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <div class="question" data-correct="a" data-explanation-correct="Correct! After 'should', use the base form (recharge). Modal verbs require the base form without 'to'." data-explanation-wrong="The correct answer is 'recharge'. After modal verbs like 'should', always use the base form. Modal verbs never take 'to' before the main verb.">
+                    <div class="question-text">
+                        3. Technicians should __________ the equipment before each shift.
+                    </div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q13" value="a"> recharge
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q13" value="b"> to recharge
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q13" value="c"> recharged
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <div class="question" data-correct="b" data-explanation-correct="Correct! After 'so as', use infinitive (to reduce). This connective shows purpose and requires the infinitive form to express the goal." data-explanation-wrong="The correct answer is 'to reduce'. 'So as' is a purpose connective and must be followed by infinitive (to + verb). It means 'in order to' and shows intention.">
+                    <div class="question-text">
+                        4. We adjusted the schedule so as __________ project delays.
+                    </div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q14" value="a"> reduce
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q14" value="b"> to reduce
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q14" value="c"> reducing
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <div class="question" data-correct="a" data-explanation-correct="Correct! After 'can', use the base form (accommodate). The facility does the accommodating (active), not is accommodated (passive)." data-explanation-wrong="The correct answer is 'accommodate'. After 'can', use the base form. The facility actively holds workers, so we use active voice, not passive.">
+                    <div class="question-text">
+                        5. The new facility can __________ up to 1000 workers comfortably.
+                    </div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q15" value="a"> accommodate
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q15" value="b"> be accommodated
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q15" value="c"> to accommodate
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <div class="question" data-correct="b" data-explanation-correct="Correct! After 'need', use infinitive (to collect). The verb 'need' is followed by the infinitive form to show requirement or necessity." data-explanation-wrong="The correct answer is 'to collect'. After 'need', we use the infinitive form (to + verb). This shows what is necessary to do.">
+                    <div class="question-text">
+                        6. Managers need __________ employee feedback regularly.
+                    </div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q16" value="a"> collect
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q16" value="b"> to collect
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q16" value="c"> collecting
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <div class="question" data-correct="a" data-explanation-correct="Correct! After 'may', use the base form (provide). Modal verbs always take the base form without 'to'." data-explanation-wrong="The correct answer is 'provide'. After modal verbs like 'may', always use the base form. Modals never use 'to' before the verb.">
+                    <div class="question-text">
+                        7. The supervisor may __________ additional training sessions.
+                    </div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q17" value="a"> provide
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q17" value="b"> to provide
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q17" value="c"> provided
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <div class="question" data-correct="b" data-explanation-correct="Correct! After 'in order', use infinitive (to demonstrate). This connective expresses purpose and requires the infinitive form." data-explanation-wrong="The correct answer is 'to demonstrate'. After 'in order', we must use infinitive (to + verb). This structure shows the purpose or reason for an action.">
+                    <div class="question-text">
+                        8. Staff were trained in order __________ the new system effectively.
+                    </div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q18" value="a"> demonstrate
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q18" value="b"> to demonstrate
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q18" value="c"> demonstrating
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <div class="question" data-correct="a" data-explanation-correct="Correct! After 'must', use the base form (improve). Modal verbs are followed by the base form without any additions." data-explanation-wrong="The correct answer is 'improve'. After 'must', use the base form of the verb. Modal verbs never take infinitive (to + verb).">
+                    <div class="question-text">
+                        9. We must __________ our production processes this year.
+                    </div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q19" value="a"> improve
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q19" value="b"> to improve
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q19" value="c"> improved
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <div class="question" data-correct="b" data-explanation-correct="Correct! After 'so as', use infinitive (to gather). This purpose connective requires the infinitive to show the intended goal." data-explanation-wrong="The correct answer is 'to gather'. 'So as' means 'in order to' and must be followed by infinitive (to + verb) to express purpose.">
+                    <div class="question-text">
+                        10. The team worked overtime so as __________ all necessary data.
+                    </div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q20" value="a"> gather
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q20" value="b"> to gather
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q20" value="c"> gathering
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <div class="question" data-correct="a" data-explanation-correct="Correct! After 'should', use the base form (lower). Ventilation actively lowers expenses (active voice), not is lowered (passive)." data-explanation-wrong="The correct answer is 'lower'. After 'should', use the base form. Ventilation does the lowering (active), so we don't use passive voice here.">
+                    <div class="question-text">
+                        11. Proper ventilation should __________ energy expenses.
+                    </div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q21" value="a"> lower
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q21" value="b"> be lowered
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q21" value="c"> to lower
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <div class="question" data-correct="b" data-explanation-correct="Correct! After 'in order', use infinitive (to address). Purpose connectives require infinitive form to show the intended goal." data-explanation-wrong="The correct answer is 'to address'. After 'in order', we must use infinitive (to + verb). This shows the purpose of the briefing.">
+                    <div class="question-text">
+                        12. Technicians were briefed in order __________ all safety concerns properly.
+                    </div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q22" value="a"> address
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q22" value="b"> to address
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q22" value="c"> addressing
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <button class="btn btn-primary" onclick="checkExercise3()">Check Answers</button>
+                <button class="btn btn-secondary" onclick="resetExercise3()">Reset</button>
+                <div id="ex3Score" class="score-display" style="display:none;"></div>
+            </div>
+            <a href="#" class="back-to-menu" onclick="showPage('menuPage'); return false;">📋 Menu</a>
+        </div>
+    </div>
+
+    <script>
+        // Page navigation
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // Drag and Drop functionality
+        let draggedElement = null;
+
+        function initDragDrop() {
+            const draggables = document.querySelectorAll('.draggable-word');
+            const dropZones = document.querySelectorAll('.drop-zone');
+
+            draggables.forEach(word => {
+                word.addEventListener('dragstart', handleDragStart);
+                word.addEventListener('dragend', handleDragEnd);
+            });
+
+            dropZones.forEach(zone => {
+                zone.addEventListener('dragover', handleDragOver);
+                zone.addEventListener('drop', handleDrop);
+                zone.addEventListener('dragleave', handleDragLeave);
+            });
+        }
+
+        function handleDragStart(e) {
+            draggedElement = this;
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', this.innerHTML);
+        }
+
+        function handleDragEnd(e) {
+            this.classList.remove('dragging');
+        }
+
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            e.dataTransfer.dropEffect = 'move';
+            this.classList.add('drag-over');
+            return false;
+        }
+
+        function handleDragLeave(e) {
+            this.classList.remove('drag-over');
+        }
+
+        function handleDrop(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+            this.classList.remove('drag-over');
+
+            if (draggedElement) {
+                const section = this.getAttribute('data-section');
+                if (this.children.length > 0) {
+                    const existingWord = this.children[0];
+                    document.getElementById('bank' + section).appendChild(existingWord);
+                }
+                this.appendChild(draggedElement);
+            }
+
+            return false;
+        }
+
+        function checkAllDragDrop() {
+            const dropZones = document.querySelectorAll('.drop-zone');
+            let correct = 0;
+            let total = dropZones.length;
+
+            dropZones.forEach(zone => {
+                const answer = zone.getAttribute('data-answer');
+                const droppedWord = zone.querySelector('.draggable-word');
+
+                if (droppedWord) {
+                    const word = droppedWord.getAttribute('data-word');
+                    if (word === answer) {
+                        zone.style.borderColor = '#4caf50';
+                        zone.style.background = '#e8f5e9';
+                        correct++;
+                    } else {
+                        zone.style.borderColor = '#f44336';
+                        zone.style.background = '#ffebee';
+                    }
+                } else {
+                    zone.style.borderColor = '#f44336';
+                    zone.style.background = '#ffebee';
+                }
+            });
+
+            const scoreDisplay = document.getElementById('dragDropScore');
+            scoreDisplay.textContent = `Score: ${correct}/${total} (${Math.round((correct/total)*100)}%)`;
+            scoreDisplay.style.display = 'block';
+        }
+
+        function resetAllDragDrop() {
+            const dropZones = document.querySelectorAll('.drop-zone');
+
+            dropZones.forEach(zone => {
+                const word = zone.querySelector('.draggable-word');
+                if (word) {
+                    const section = zone.getAttribute('data-section');
+                    document.getElementById('bank' + section).appendChild(word);
+                }
+                zone.style.borderColor = '#667eea';
+                zone.style.background = '#f0f4ff';
+            });
+
+            document.getElementById('dragDropScore').style.display = 'none';
+        }
+
+        // Exercise 2 functions with explanations
+        function checkExercise2() {
+            const section = document.getElementById('exercise2Page');
+            const questions = section.querySelectorAll('.question');
+            let correct = 0;
+            let total = questions.length;
+
+            questions.forEach(question => {
+                const correctAnswer = question.getAttribute('data-correct');
+                const correctExplanation = question.getAttribute('data-explanation-correct');
+                const wrongExplanation = question.getAttribute('data-explanation-wrong');
+                const selected = question.querySelector('input[type="radio"]:checked');
+                const feedback = question.querySelector('.feedback');
+                const options = question.querySelectorAll('.option');
+
+                options.forEach(opt => {
+                    opt.classList.remove('correct', 'incorrect', 'selected');
+                });
+
+                if (selected) {
+                    const selectedOption = selected.closest('.option');
+                    selectedOption.classList.add('selected');
+
+                    if (selected.value === correctAnswer) {
+                        selectedOption.classList.add('correct');
+                        feedback.innerHTML = '<strong>✓ Correct!</strong><br>' + correctExplanation;
+                        feedback.className = 'feedback correct show';
+                        correct++;
+                    } else {
+                        selectedOption.classList.add('incorrect');
+                        feedback.innerHTML = '<strong>✗ Incorrect</strong><br>' + wrongExplanation;
+                        feedback.className = 'feedback incorrect show';
+                    }
+                } else {
+                    feedback.innerHTML = '<strong>⚠ Please select an answer.</strong>';
+                    feedback.className = 'feedback incorrect show';
+                }
+            });
+
+            const scoreDisplay = document.getElementById('ex2Score');
+            scoreDisplay.textContent = `Score: ${correct}/${total} (${Math.round((correct/total)*100)}%)`;
+            scoreDisplay.style.display = 'block';
+        }
+
+        function resetExercise2() {
+            const section = document.getElementById('exercise2Page');
+            const questions = section.querySelectorAll('.question');
+
+            questions.forEach(question => {
+                const radios = question.querySelectorAll('input[type="radio"]');
+                radios.forEach(radio => radio.checked = false);
+
+                const feedback = question.querySelector('.feedback');
+                feedback.className = 'feedback';
+
+                const options = question.querySelectorAll('.option');
+                options.forEach(opt => {
+                    opt.classList.remove('correct', 'incorrect', 'selected');
+                });
+            });
+
+            document.getElementById('ex2Score').style.display = 'none';
+        }
+
+        // Exercise 3 functions with explanations
+        function checkExercise3() {
+            const section = document.getElementById('exercise3Page');
+            const questions = section.querySelectorAll('.question');
+            let correct = 0;
+            let total = questions.length;
+
+            questions.forEach(question => {
+                const correctAnswer = question.getAttribute('data-correct');
+                const correctExplanation = question.getAttribute('data-explanation-correct');
+                const wrongExplanation = question.getAttribute('data-explanation-wrong');
+                const selected = question.querySelector('input[type="radio"]:checked');
+                const feedback = question.querySelector('.feedback');
+                const options = question.querySelectorAll('.option');
+
+                options.forEach(opt => {
+                    opt.classList.remove('correct', 'incorrect', 'selected');
+                });
+
+                if (selected) {
+                    const selectedOption = selected.closest('.option');
+                    selectedOption.classList.add('selected');
+
+                    if (selected.value === correctAnswer) {
+                        selectedOption.classList.add('correct');
+                        feedback.innerHTML = '<strong>✓ Correct!</strong><br>' + correctExplanation;
+                        feedback.className = 'feedback correct show';
+                        correct++;
+                    } else {
+                        selectedOption.classList.add('incorrect');
+                        feedback.innerHTML = '<strong>✗ Incorrect</strong><br>' + wrongExplanation;
+                        feedback.className = 'feedback incorrect show';
+                    }
+                } else {
+                    feedback.innerHTML = '<strong>⚠ Please select an answer.</strong>';
+                    feedback.className = 'feedback incorrect show';
+                }
+            });
+
+            const scoreDisplay = document.getElementById('ex3Score');
+            scoreDisplay.textContent = `Score: ${correct}/${total} (${Math.round((correct/total)*100)}%)`;
+            scoreDisplay.style.display = 'block';
+        }
+
+        function resetExercise3() {
+            const section = document.getElementById('exercise3Page');
+            const questions = section.querySelectorAll('.question');
+
+            questions.forEach(question => {
+                const radios = question.querySelectorAll('input[type="radio"]');
+                radios.forEach(radio => radio.checked = false);
+
+                const feedback = question.querySelector('.feedback');
+                feedback.className = 'feedback';
+
+                const options = question.querySelectorAll('.option');
+                options.forEach(opt => {
+                    opt.classList.remove('correct', 'incorrect', 'selected');
+                });
+            });
+
+            document.getElementById('ex3Score').style.display = 'none';
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', initDragDrop);
+    </script>
+</body>
+</html>
