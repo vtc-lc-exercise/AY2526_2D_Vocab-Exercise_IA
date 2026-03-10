@@ -232,24 +232,35 @@
             font-weight: bold;
         }
 
+        
         .draggable-word {
             display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 8px 15px;
-            margin: 5px;
+            padding: 8px 16px;
+            background: #ffffff;
+            border: 2px solid #667eea;
             border-radius: 20px;
-            cursor: move;
+            margin: 5px;
+            cursor: pointer; /* Changed from grab to pointer */
+            font-weight: 500;
+            color: #4a5568;
+            transition: all 0.2s;
             user-select: none;
-            transition: all 0.3s;
-            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
-        
-            -webkit-user-select: none;
-            user-select: none;
-            -webkit-touch-callout: none;
-            touch-action: none;
-            -webkit-transform: translateZ(0);
-            transform: translateZ(0);}
+            touch-action: manipulation; /* Important for mobile tap */
+        }
+
+        .draggable-word:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(102, 126, 234, 0.2);
+            background: #f0f4ff;
+        }
+
+        .selected-word {
+            border-color: #ff9800 !important;
+            background: #fff3e0 !important;
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(255, 152, 0, 0.4);
+        }
+
 
         .draggable-word:hover {
             transform: scale(1.1);
@@ -482,7 +493,36 @@
                 font-size: 0.9em;
             }
         }
-    </style>
+    
+        .draggable-word {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #ffffff;
+            border: 2px solid #667eea;
+            border-radius: 20px;
+            margin: 5px;
+            cursor: pointer; /* Changed from grab to pointer */
+            font-weight: 500;
+            color: #4a5568;
+            transition: all 0.2s;
+            user-select: none;
+            touch-action: manipulation; /* Important for mobile tap */
+        }
+
+        .draggable-word:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(102, 126, 234, 0.2);
+            background: #f0f4ff;
+        }
+
+        .selected-word {
+            border-color: #ff9800 !important;
+            background: #fff3e0 !important;
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(255, 152, 0, 0.4);
+        }
+
+</style>
 </head>
 <body>
     <div class="container">
@@ -501,9 +541,9 @@
 
                 <div class="exercise-card" onclick="showPage('exercise1Page')">
                     <div class="exercise-number">Exercise 1</div>
-                    <div class="exercise-title">Drag and Drop - Word Usage</div>
+                    <div class="exercise-title">Tap and Select - Word Usage</div>
                     <div class="exercise-description">
-                        Drag vocabulary words to complete sentences in engineering workplace contexts. Practice identifying and using words correctly.
+                        Select vocabulary words to complete sentences in engineering workplace contexts. Practice identifying and using words correctly.
                     </div>
                     <div class="exercise-details">
                         8 sections • 39 questions • All 40 vocabulary words
@@ -539,7 +579,7 @@
             <div class="exercise-section">
                 <div class="section-title">Exercise 1: Word Usage</div>
                 <div class="exercise-instructions">
-                    <strong>Instructions:</strong> Drag the correct word from the word bank to complete each sentence. All sentences relate to engineering workplace contexts.
+                    <strong>Instructions:</strong> Tap a word from the word bank to select it, then tap a blank space to fill it in. All sentences relate to engineering workplace contexts.
                 </div>
 
                 <div class="drag-section">
@@ -548,11 +588,11 @@
                         <div class="word-bank">
                             <h4>Word Bank</h4>
                             <div class="section-bank" id="bank1">
-                                <span class="draggable-word" draggable="true" data-word="battery">battery</span>
-                                <span class="draggable-word" draggable="true" data-word="concern">concern</span>
-                                <span class="draggable-word" draggable="true" data-word="construction">construction</span>
-                                <span class="draggable-word" draggable="true" data-word="coordination">coordination</span>
-                                <span class="draggable-word" draggable="true" data-word="delay">delay</span>
+                                <span class="draggable-word"  data-word="battery">battery</span>
+                                <span class="draggable-word"  data-word="concern">concern</span>
+                                <span class="draggable-word"  data-word="construction">construction</span>
+                                <span class="draggable-word"  data-word="coordination">coordination</span>
+                                <span class="draggable-word"  data-word="delay">delay</span>
                             </div>
                         </div>
                         <div class="sentence-container">
@@ -571,11 +611,11 @@
                         <div class="word-bank">
                             <h4>Word Bank</h4>
                             <div class="section-bank" id="bank2">
-                                <span class="draggable-word" draggable="true" data-word="difficulty">difficulty</span>
-                                <span class="draggable-word" draggable="true" data-word="expense">expense</span>
-                                <span class="draggable-word" draggable="true" data-word="exposure">exposure</span>
-                                <span class="draggable-word" draggable="true" data-word="facility">facility</span>
-                                <span class="draggable-word" draggable="true" data-word="feedback">feedback</span>
+                                <span class="draggable-word"  data-word="difficulty">difficulty</span>
+                                <span class="draggable-word"  data-word="expense">expense</span>
+                                <span class="draggable-word"  data-word="exposure">exposure</span>
+                                <span class="draggable-word"  data-word="facility">facility</span>
+                                <span class="draggable-word"  data-word="feedback">feedback</span>
                             </div>
                         </div>
                         <div class="sentence-container">
@@ -594,11 +634,11 @@
                         <div class="word-bank">
                             <h4>Word Bank</h4>
                             <div class="section-bank" id="bank3">
-                                <span class="draggable-word" draggable="true" data-word="implementation">implementation</span>
-                                <span class="draggable-word" draggable="true" data-word="maintenance">maintenance</span>
-                                <span class="draggable-word" draggable="true" data-word="relief">relief</span>
-                                <span class="draggable-word" draggable="true" data-word="solution">solution</span>
-                                <span class="draggable-word" draggable="true" data-word="supervision">supervision</span>
+                                <span class="draggable-word"  data-word="implementation">implementation</span>
+                                <span class="draggable-word"  data-word="maintenance">maintenance</span>
+                                <span class="draggable-word"  data-word="relief">relief</span>
+                                <span class="draggable-word"  data-word="solution">solution</span>
+                                <span class="draggable-word"  data-word="supervision">supervision</span>
                             </div>
                         </div>
                         <div class="sentence-container">
@@ -617,11 +657,11 @@
                         <div class="word-bank">
                             <h4>Word Bank</h4>
                             <div class="section-bank" id="bank4">
-                                <span class="draggable-word" draggable="true" data-word="temperature">temperature</span>
-                                <span class="draggable-word" draggable="true" data-word="usage">usage</span>
-                                <span class="draggable-word" draggable="true" data-word="affect">affect</span>
-                                <span class="draggable-word" draggable="true" data-word="collect">collect</span>
-                                <span class="draggable-word" draggable="true" data-word="demonstrate">demonstrate</span>
+                                <span class="draggable-word"  data-word="temperature">temperature</span>
+                                <span class="draggable-word"  data-word="usage">usage</span>
+                                <span class="draggable-word"  data-word="affect">affect</span>
+                                <span class="draggable-word"  data-word="collect">collect</span>
+                                <span class="draggable-word"  data-word="demonstrate">demonstrate</span>
                             </div>
                         </div>
                         <div class="sentence-container">
@@ -640,11 +680,11 @@
                         <div class="word-bank">
                             <h4>Word Bank</h4>
                             <div class="section-bank" id="bank5">
-                                <span class="draggable-word" draggable="true" data-word="gather">gather</span>
-                                <span class="draggable-word" draggable="true" data-word="improve">improve</span>
-                                <span class="draggable-word" draggable="true" data-word="induce">induce</span>
-                                <span class="draggable-word" draggable="true" data-word="lower">lower</span>
-                                <span class="draggable-word" draggable="true" data-word="obtain">obtain</span>
+                                <span class="draggable-word"  data-word="gather">gather</span>
+                                <span class="draggable-word"  data-word="improve">improve</span>
+                                <span class="draggable-word"  data-word="induce">induce</span>
+                                <span class="draggable-word"  data-word="lower">lower</span>
+                                <span class="draggable-word"  data-word="obtain">obtain</span>
                             </div>
                         </div>
                         <div class="sentence-container">
@@ -663,11 +703,11 @@
                         <div class="word-bank">
                             <h4>Word Bank</h4>
                             <div class="section-bank" id="bank6">
-                                <span class="draggable-word" draggable="true" data-word="provide">provide</span>
-                                <span class="draggable-word" draggable="true" data-word="recharge">recharge</span>
-                                <span class="draggable-word" draggable="true" data-word="reduce">reduce</span>
-                                <span class="draggable-word" draggable="true" data-word="require">require</span>
-                                <span class="draggable-word" draggable="true" data-word="additional">additional</span>
+                                <span class="draggable-word"  data-word="provide">provide</span>
+                                <span class="draggable-word"  data-word="recharge">recharge</span>
+                                <span class="draggable-word"  data-word="reduce">reduce</span>
+                                <span class="draggable-word"  data-word="require">require</span>
+                                <span class="draggable-word"  data-word="additional">additional</span>
                             </div>
                         </div>
                         <div class="sentence-container">
@@ -686,11 +726,11 @@
                         <div class="word-bank">
                             <h4>Word Bank</h4>
                             <div class="section-bank" id="bank7">
-                                <span class="draggable-word" draggable="true" data-word="applicable">applicable</span>
-                                <span class="draggable-word" draggable="true" data-word="effective">effective</span>
-                                <span class="draggable-word" draggable="true" data-word="frequent">frequent</span>
-                                <span class="draggable-word" draggable="true" data-word="helpful">helpful</span>
-                                <span class="draggable-word" draggable="true" data-word="immediate">immediate</span>
+                                <span class="draggable-word"  data-word="applicable">applicable</span>
+                                <span class="draggable-word"  data-word="effective">effective</span>
+                                <span class="draggable-word"  data-word="frequent">frequent</span>
+                                <span class="draggable-word"  data-word="helpful">helpful</span>
+                                <span class="draggable-word"  data-word="immediate">immediate</span>
                             </div>
                         </div>
                         <div class="sentence-container">
@@ -709,10 +749,10 @@
                         <div class="word-bank">
                             <h4>Word Bank</h4>
                             <div class="section-bank" id="bank8">
-                                <span class="draggable-word" draggable="true" data-word="initial">initial</span>
-                                <span class="draggable-word" draggable="true" data-word="ongoing">ongoing</span>
-                                <span class="draggable-word" draggable="true" data-word="greatly">greatly</span>
-                                <span class="draggable-word" draggable="true" data-word="significantly">significantly</span>
+                                <span class="draggable-word"  data-word="initial">initial</span>
+                                <span class="draggable-word"  data-word="ongoing">ongoing</span>
+                                <span class="draggable-word"  data-word="greatly">greatly</span>
+                                <span class="draggable-word"  data-word="significantly">significantly</span>
                             </div>
                         </div>
                         <div class="sentence-container">
@@ -738,16 +778,16 @@
                 <div class="exercise-instructions">
                     <strong>Instructions:</strong> Choose the correct form to complete each sentence.
                 </div>
-                <div class="question" data-correct="a" data-explanation-correct="Correct! 'Developed' is active voice." data-explanation-wrong="Wrong! If you chose 'was developed': This is passive voice, but the engineering team actively did the development, so use active voice. If you chose 'has been developed': This is present perfect passive, but 'last quarter' requires simple past tense. The correct answer is 'developed' (active voice, simple past)."><div class="question-text">1. The engineering team __________ the new battery system last quarter.</div><div class="options"><label class="option"><input type="radio" name="q1" value="a"> developed</label><label class="option"><input type="radio" name="q1" value="b"> was developed</label><label class="option"><input type="radio" name="q1" value="c"> has been developed</label></div><div class="feedback"></div></div>
-                <div class="question" data-correct="a" data-explanation-correct="Correct! 'Collect' is active voice." data-explanation-wrong="Wrong! If you chose 'are collected': This is passive voice and makes supervisors the receiver of the action, but they actively do the collecting. If you chose 'have collected': This is present perfect, but 'weekly' indicates a habitual action requiring present simple. The correct answer is 'collect' (active voice, present simple)."><div class="question-text">2. Supervisors __________ safety data from all departments weekly.</div><div class="options"><label class="option"><input type="radio" name="q2" value="a"> collect</label><label class="option"><input type="radio" name="q2" value="b"> are collected</label><label class="option"><input type="radio" name="q2" value="c"> have collected</label></div><div class="feedback"></div></div>
-                <div class="question" data-correct="b" data-explanation-correct="Correct! 'Is recharged' is passive voice." data-explanation-wrong="Wrong! If you chose 'recharged': This is active voice suggesting the equipment recharges itself, but equipment receives the action. If you chose 'recharging': This is a participle/gerund and doesn't fit grammatically as the main verb here. The correct answer is 'is recharged' (passive voice, present simple)."><div class="question-text">3. The equipment __________ every morning before operations begin.</div><div class="options"><label class="option"><input type="radio" name="q3" value="a"> recharged</label><label class="option"><input type="radio" name="q3" value="b"> is recharged</label><label class="option"><input type="radio" name="q3" value="c"> recharging</label></div><div class="feedback"></div></div>
-                <div class="question" data-correct="a" data-explanation-correct="Correct! 'Reduces' is active voice." data-explanation-wrong="Wrong! If you chose 'is reduced': This is passive voice, but the system actively reduces costs—it's the doer, not the receiver. If you chose 'was reducing': This is past continuous, but the sentence needs present simple for a general fact. The correct answer is 'reduces' (active voice, present simple)."><div class="question-text">4. The new system __________ operational costs by 20%.</div><div class="options"><label class="option"><input type="radio" name="q4" value="a"> reduces</label><label class="option"><input type="radio" name="q4" value="b"> is reduced</label><label class="option"><input type="radio" name="q4" value="c"> was reducing</label></div><div class="feedback"></div></div>
-                <div class="question" data-correct="b" data-explanation-correct="Correct! 'Was gathered' is passive voice." data-explanation-wrong="Wrong! If you chose 'gathered': This is active voice, but information doesn't gather itself—it receives the action. If you chose 'gathering': This is a participle/gerund and doesn't fit grammatically as the main verb. The correct answer is 'was gathered' (passive voice, simple past)."><div class="question-text">5. Critical information __________ from managers before the meeting.</div><div class="options"><label class="option"><input type="radio" name="q5" value="a"> gathered</label><label class="option"><input type="radio" name="q5" value="b"> was gathered</label><label class="option"><input type="radio" name="q5" value="c"> gathering</label></div><div class="feedback"></div></div>
-                <div class="question" data-correct="a" data-explanation-correct="Correct! 'Provide' is active voice." data-explanation-wrong="Wrong! If you chose 'are provided': This is passive voice implying engineers receive solutions, but they actively create/give them. If you chose 'have providing': This is grammatically incorrect (should be 'have provided' if anything). The correct answer is 'provide' (active voice, present simple)."><div class="question-text">6. Our engineers __________ innovative solutions to complex problems.</div><div class="options"><label class="option"><input type="radio" name="q6" value="a"> provide</label><label class="option"><input type="radio" name="q6" value="b"> are provided</label><label class="option"><input type="radio" name="q6" value="c"> have providing</label></div><div class="feedback"></div></div>
-                <div class="question" data-correct="b" data-explanation-correct="Correct! 'Be induced' is passive voice." data-explanation-wrong="Wrong! If you chose 'induced': This is active voice, but fatigue doesn't induce itself—it's caused by poor lighting. If you chose 'inducing': This is a participle and doesn't fit after 'can' in this context. The correct answer is 'be induced' (passive voice after modal 'can')."><div class="question-text">7. Worker fatigue can __________ by poor lighting conditions.</div><div class="options"><label class="option"><input type="radio" name="q7" value="a"> induced</label><label class="option"><input type="radio" name="q7" value="b"> be induced</label><label class="option"><input type="radio" name="q7" value="c"> inducing</label></div><div class="feedback"></div></div>
-                <div class="question" data-correct="a" data-explanation-correct="Correct! 'Affect' is active voice." data-explanation-wrong="Wrong! If you chose 'are affected': This is passive voice, but humidity levels actively affect equipment—they're the cause, not the receiver. If you chose 'has affected': This is present perfect with wrong subject-verb agreement, and the sentence needs present simple for a general fact. The correct answer is 'affect' (active voice, present simple)."><div class="question-text">8. Humidity levels __________ the performance of electronic equipment.</div><div class="options"><label class="option"><input type="radio" name="q8" value="a"> affect</label><label class="option"><input type="radio" name="q8" value="b"> are affected</label><label class="option"><input type="radio" name="q8" value="c"> has affected</label></div><div class="feedback"></div></div>
-                <div class="question" data-correct="b" data-explanation-correct="Correct! 'Be demonstrated' is passive voice." data-explanation-wrong="Wrong! If you chose 'demonstrate': This is active voice, but procedures don't demonstrate themselves—they must be shown by inspectors. If you chose 'demonstrating': This is a participle/gerund and doesn't fit after 'must' in this context. The correct answer is 'be demonstrated' (passive voice after modal 'must')."><div class="question-text">9. All safety procedures must __________ during inspections.</div><div class="options"><label class="option"><input type="radio" name="q9" value="a"> demonstrate</label><label class="option"><input type="radio" name="q9" value="b"> be demonstrated</label><label class="option"><input type="radio" name="q9" value="c"> demonstrating</label></div><div class="feedback"></div></div>
-                <div class="question" data-correct="a" data-explanation-correct="Correct! 'Lowered' is active voice." data-explanation-wrong="Wrong! If you chose 'were lowered': This is passive voice, but management actively lowered the costs—they're the doer. If you chose 'have lowering': This is grammatically incorrect. The correct answer is 'lowered' (active voice, simple past)."><div class="question-text">10. Management __________ energy costs through better insulation.</div><div class="options"><label class="option"><input type="radio" name="q10" value="a"> lowered</label><label class="option"><input type="radio" name="q10" value="b"> were lowered</label><label class="option"><input type="radio" name="q10" value="c"> have lowering</label></div><div class="feedback"></div></div>
+                <div class="question" data-correct="a" data-explanation-correct="Correct! 'Developed' is active voice." data-explanation-wrong="The correct answer is 'developed'."><div class="question-text">1. The engineering team __________ the new battery system last quarter.</div><div class="options"><label class="option"><input type="radio" name="q1" value="a"> developed</label><label class="option"><input type="radio" name="q1" value="b"> was developed</label><label class="option"><input type="radio" name="q1" value="c"> has been developed</label></div><div class="feedback"></div></div>
+                <div class="question" data-correct="a" data-explanation-correct="Correct! 'Collect' is active voice." data-explanation-wrong="The correct answer is 'collect'."><div class="question-text">2. Supervisors __________ safety data from all departments weekly.</div><div class="options"><label class="option"><input type="radio" name="q2" value="a"> collect</label><label class="option"><input type="radio" name="q2" value="b"> are collected</label><label class="option"><input type="radio" name="q2" value="c"> have collected</label></div><div class="feedback"></div></div>
+                <div class="question" data-correct="b" data-explanation-correct="Correct! 'Is recharged' is passive voice." data-explanation-wrong="The correct answer is 'is recharged'."><div class="question-text">3. The equipment __________ every morning before operations begin.</div><div class="options"><label class="option"><input type="radio" name="q3" value="a"> recharged</label><label class="option"><input type="radio" name="q3" value="b"> is recharged</label><label class="option"><input type="radio" name="q3" value="c"> recharging</label></div><div class="feedback"></div></div>
+                <div class="question" data-correct="a" data-explanation-correct="Correct! 'Reduces' is active voice." data-explanation-wrong="The correct answer is 'reduces'."><div class="question-text">4. The new system __________ operational costs by 20%.</div><div class="options"><label class="option"><input type="radio" name="q4" value="a"> reduces</label><label class="option"><input type="radio" name="q4" value="b"> is reduced</label><label class="option"><input type="radio" name="q4" value="c"> was reducing</label></div><div class="feedback"></div></div>
+                <div class="question" data-correct="b" data-explanation-correct="Correct! 'Was gathered' is passive voice." data-explanation-wrong="The correct answer is 'was gathered'."><div class="question-text">5. Critical information __________ from managers before the meeting.</div><div class="options"><label class="option"><input type="radio" name="q5" value="a"> gathered</label><label class="option"><input type="radio" name="q5" value="b"> was gathered</label><label class="option"><input type="radio" name="q5" value="c"> gathering</label></div><div class="feedback"></div></div>
+                <div class="question" data-correct="a" data-explanation-correct="Correct! 'Provide' is active voice." data-explanation-wrong="The correct answer is 'provide'."><div class="question-text">6. Our engineers __________ innovative solutions to complex problems.</div><div class="options"><label class="option"><input type="radio" name="q6" value="a"> provide</label><label class="option"><input type="radio" name="q6" value="b"> are provided</label><label class="option"><input type="radio" name="q6" value="c"> have providing</label></div><div class="feedback"></div></div>
+                <div class="question" data-correct="b" data-explanation-correct="Correct! 'Be induced' is passive voice." data-explanation-wrong="The correct answer is 'be induced'."><div class="question-text">7. Worker fatigue can __________ by poor lighting conditions.</div><div class="options"><label class="option"><input type="radio" name="q7" value="a"> induced</label><label class="option"><input type="radio" name="q7" value="b"> be induced</label><label class="option"><input type="radio" name="q7" value="c"> inducing</label></div><div class="feedback"></div></div>
+                <div class="question" data-correct="a" data-explanation-correct="Correct! 'Affect' is active voice." data-explanation-wrong="The correct answer is 'affect'."><div class="question-text">8. Humidity levels __________ the performance of electronic equipment.</div><div class="options"><label class="option"><input type="radio" name="q8" value="a"> affect</label><label class="option"><input type="radio" name="q8" value="b"> are affected</label><label class="option"><input type="radio" name="q8" value="c"> has affected</label></div><div class="feedback"></div></div>
+                <div class="question" data-correct="b" data-explanation-correct="Correct! 'Be demonstrated' is passive voice." data-explanation-wrong="The correct answer is 'be demonstrated'."><div class="question-text">9. All safety procedures must __________ during inspections.</div><div class="options"><label class="option"><input type="radio" name="q9" value="a"> demonstrate</label><label class="option"><input type="radio" name="q9" value="b"> be demonstrated</label><label class="option"><input type="radio" name="q9" value="c"> demonstrating</label></div><div class="feedback"></div></div>
+                <div class="question" data-correct="a" data-explanation-correct="Correct! 'Lowered' is active voice." data-explanation-wrong="The correct answer is 'lowered'."><div class="question-text">10. Management __________ energy costs through better insulation.</div><div class="options"><label class="option"><input type="radio" name="q10" value="a"> lowered</label><label class="option"><input type="radio" name="q10" value="b"> were lowered</label><label class="option"><input type="radio" name="q10" value="c"> have lowering</label></div><div class="feedback"></div></div>
                 <button class="btn btn-primary" onclick="checkExercise2()">Check Answers</button>
                 <button class="btn btn-secondary" onclick="resetExercise2()">Reset</button>
                 <div id="ex2Score" class="score-display" style="display:none;"></div>
@@ -762,18 +802,18 @@
                 <div class="exercise-instructions">
                     <strong>Instructions:</strong> Choose the correct verb form.
                 </div>
-                <div class="question" data-correct="a" data-explanation-correct="Correct! After 'must', use base form." data-explanation-wrong="Wrong! If you chose 'to require': Don't use 'to' after modal verbs—modals like 'must' always take bare infinitive. If you chose 'required': This is past participle and doesn't follow modal verbs in active constructions. The correct answer is 'require' (bare infinitive after modal 'must')."><div class="question-text">1. All engineers must __________ regular maintenance procedures.</div><div class="options"><label class="option"><input type="radio" name="q11" value="a"> require</label><label class="option"><input type="radio" name="q11" value="b"> to require</label><label class="option"><input type="radio" name="q11" value="c"> required</label></div><div class="feedback"></div></div>
-                <div class="question" data-correct="b" data-explanation-correct="Correct! After 'in order', use infinitive." data-explanation-wrong="Wrong! If you chose 'obtain': You need the infinitive marker 'to' after 'in order'. If you chose 'obtaining': The -ing form is not used after 'in order to'. The correct answer is 'to obtain' (to-infinitive after 'in order to' expressing purpose)."><div class="question-text">2. The company installed new sensors in order __________ temperature accurately.</div><div class="options"><label class="option"><input type="radio" name="q12" value="a"> obtain</label><label class="option"><input type="radio" name="q12" value="b"> to obtain</label><label class="option"><input type="radio" name="q12" value="c"> obtaining</label></div><div class="feedback"></div></div>
-                <div class="question" data-correct="a" data-explanation-correct="Correct! After 'should', use base form." data-explanation-wrong="Wrong! If you chose 'to recharge': Don't use 'to' after modal verbs—'should' takes bare infinitive. If you chose 'recharged': This is past participle and doesn't follow modals in active constructions. The correct answer is 'recharge' (bare infinitive after modal 'should')."><div class="question-text">3. Technicians should __________ the equipment before each shift.</div><div class="options"><label class="option"><input type="radio" name="q13" value="a"> recharge</label><label class="option"><input type="radio" name="q13" value="b"> to recharge</label><label class="option"><input type="radio" name="q13" value="c"> recharged</label></div><div class="feedback"></div></div>
-                <div class="question" data-correct="b" data-explanation-correct="Correct! After 'so as', use infinitive." data-explanation-wrong="Wrong! If you chose 'reduce': You need 'to' with 'so as to' to form the infinitive. If you chose 'reducing': The -ing form is not used after 'so as to'. The correct answer is 'to reduce' (to-infinitive after 'so as to' expressing purpose)."><div class="question-text">4. We adjusted the schedule so as __________ project delays.</div><div class="options"><label class="option"><input type="radio" name="q14" value="a"> reduce</label><label class="option"><input type="radio" name="q14" value="b"> to reduce</label><label class="option"><input type="radio" name="q14" value="c"> reducing</label></div><div class="feedback"></div></div>
-                <div class="question" data-correct="a" data-explanation-correct="Correct! After 'can', use base form." data-explanation-wrong="Wrong! If you chose 'be accommodated': This is passive voice, but the facility actively accommodates workers—no passive needed. If you chose 'to accommodate': Don't use 'to' after modal verbs—'can' takes bare infinitive. The correct answer is 'accommodate' (bare infinitive after modal 'can')."><div class="question-text">5. The new facility can __________ up to 1000 workers comfortably.</div><div class="options"><label class="option"><input type="radio" name="q15" value="a"> accommodate</label><label class="option"><input type="radio" name="q15" value="b"> be accommodated</label><label class="option"><input type="radio" name="q15" value="c"> to accommodate</label></div><div class="feedback"></div></div>
-                <div class="question" data-correct="b" data-explanation-correct="Correct! After 'need', use infinitive." data-explanation-wrong="Wrong! If you chose 'collect': The verb 'need' requires the to-infinitive. If you chose 'collecting': Gerund form is not correct after 'need' in this context. The correct answer is 'to collect' (to-infinitive after 'need')."><div class="question-text">6. Managers need __________ employee feedback regularly.</div><div class="options"><label class="option"><input type="radio" name="q16" value="a"> collect</label><label class="option"><input type="radio" name="q16" value="b"> to collect</label><label class="option"><input type="radio" name="q16" value="c"> collecting</label></div><div class="feedback"></div></div>
-                <div class="question" data-correct="a" data-explanation-correct="Correct! After 'may', use base form." data-explanation-wrong="Wrong! If you chose 'to provide': Don't use 'to' after modal verbs—'may' takes bare infinitive. If you chose 'provided': This is past participle and doesn't follow modals in this context. The correct answer is 'provide' (bare infinitive after modal 'may')."><div class="question-text">7. The supervisor may __________ additional training sessions.</div><div class="options"><label class="option"><input type="radio" name="q17" value="a"> provide</label><label class="option"><input type="radio" name="q17" value="b"> to provide</label><label class="option"><input type="radio" name="q17" value="c"> provided</label></div><div class="feedback"></div></div>
-                <div class="question" data-correct="b" data-explanation-correct="Correct! After 'in order', use infinitive." data-explanation-wrong="Wrong! If you chose 'demonstrate': You need 'to' after 'in order' to form the infinitive. If you chose 'demonstrating': The -ing form is not used after 'in order to'. The correct answer is 'to demonstrate' (to-infinitive after 'in order to' expressing purpose)."><div class="question-text">8. Staff were trained in order __________ the new system effectively.</div><div class="options"><label class="option"><input type="radio" name="q18" value="a"> demonstrate</label><label class="option"><input type="radio" name="q18" value="b"> to demonstrate</label><label class="option"><input type="radio" name="q18" value="c"> demonstrating</label></div><div class="feedback"></div></div>
-                <div class="question" data-correct="a" data-explanation-correct="Correct! After 'must', use base form." data-explanation-wrong="Wrong! If you chose 'to improve': Don't use 'to' after modal verbs—'must' takes bare infinitive. If you chose 'improved': This is past participle and doesn't follow modals in active constructions. The correct answer is 'improve' (bare infinitive after modal 'must')."><div class="question-text">9. We must __________ our production processes this year.</div><div class="options"><label class="option"><input type="radio" name="q19" value="a"> improve</label><label class="option"><input type="radio" name="q19" value="b"> to improve</label><label class="option"><input type="radio" name="q19" value="c"> improved</label></div><div class="feedback"></div></div>
-                <div class="question" data-correct="b" data-explanation-correct="Correct! After 'so as', use infinitive." data-explanation-wrong="Wrong! If you chose 'gather': You need 'to' with 'so as to' to form the infinitive. If you chose 'gathering': The -ing form is not used after 'so as to'. The correct answer is 'to gather' (to-infinitive after 'so as to' expressing purpose)."><div class="question-text">10. The team worked overtime so as __________ all necessary data.</div><div class="options"><label class="option"><input type="radio" name="q20" value="a"> gather</label><label class="option"><input type="radio" name="q20" value="b"> to gather</label><label class="option"><input type="radio" name="q20" value="c"> gathering</label></div><div class="feedback"></div></div>
-                <div class="question" data-correct="a" data-explanation-correct="Correct! After 'should', use base form." data-explanation-wrong="Wrong! If you chose 'be lowered': This is passive voice, but ventilation actively lowers expenses—it's the subject doing the action. If you chose 'to lower': Don't use 'to' after modal verbs—'should' takes bare infinitive. The correct answer is 'lower' (bare infinitive after modal 'should')."><div class="question-text">11. Proper ventilation should __________ energy expenses.</div><div class="options"><label class="option"><input type="radio" name="q21" value="a"> lower</label><label class="option"><input type="radio" name="q21" value="b"> be lowered</label><label class="option"><input type="radio" name="q21" value="c"> to lower</label></div><div class="feedback"></div></div>
-                <div class="question" data-correct="b" data-explanation-correct="Correct! After 'in order', use infinitive." data-explanation-wrong="Wrong! If you chose 'address': You need 'to' after 'in order' to form the infinitive. If you chose 'addressing': The -ing form is not used after 'in order to'. The correct answer is 'to address' (to-infinitive after 'in order to' expressing purpose)."><div class="question-text">12. Technicians were briefed in order __________ all safety concerns properly.</div><div class="options"><label class="option"><input type="radio" name="q22" value="a"> address</label><label class="option"><input type="radio" name="q22" value="b"> to address</label><label class="option"><input type="radio" name="q22" value="c"> addressing</label></div><div class="feedback"></div></div>
+                <div class="question" data-correct="a" data-explanation-correct="Correct! After 'must', use base form." data-explanation-wrong="The correct answer is 'require'."><div class="question-text">1. All engineers must __________ regular maintenance procedures.</div><div class="options"><label class="option"><input type="radio" name="q11" value="a"> require</label><label class="option"><input type="radio" name="q11" value="b"> to require</label><label class="option"><input type="radio" name="q11" value="c"> required</label></div><div class="feedback"></div></div>
+                <div class="question" data-correct="b" data-explanation-correct="Correct! After 'in order', use infinitive." data-explanation-wrong="The correct answer is 'to obtain'."><div class="question-text">2. The company installed new sensors in order __________ temperature accurately.</div><div class="options"><label class="option"><input type="radio" name="q12" value="a"> obtain</label><label class="option"><input type="radio" name="q12" value="b"> to obtain</label><label class="option"><input type="radio" name="q12" value="c"> obtaining</label></div><div class="feedback"></div></div>
+                <div class="question" data-correct="a" data-explanation-correct="Correct! After 'should', use base form." data-explanation-wrong="The correct answer is 'recharge'."><div class="question-text">3. Technicians should __________ the equipment before each shift.</div><div class="options"><label class="option"><input type="radio" name="q13" value="a"> recharge</label><label class="option"><input type="radio" name="q13" value="b"> to recharge</label><label class="option"><input type="radio" name="q13" value="c"> recharged</label></div><div class="feedback"></div></div>
+                <div class="question" data-correct="b" data-explanation-correct="Correct! After 'so as', use infinitive." data-explanation-wrong="The correct answer is 'to reduce'."><div class="question-text">4. We adjusted the schedule so as __________ project delays.</div><div class="options"><label class="option"><input type="radio" name="q14" value="a"> reduce</label><label class="option"><input type="radio" name="q14" value="b"> to reduce</label><label class="option"><input type="radio" name="q14" value="c"> reducing</label></div><div class="feedback"></div></div>
+                <div class="question" data-correct="a" data-explanation-correct="Correct! After 'can', use base form." data-explanation-wrong="The correct answer is 'accommodate'."><div class="question-text">5. The new facility can __________ up to 1000 workers comfortably.</div><div class="options"><label class="option"><input type="radio" name="q15" value="a"> accommodate</label><label class="option"><input type="radio" name="q15" value="b"> be accommodated</label><label class="option"><input type="radio" name="q15" value="c"> to accommodate</label></div><div class="feedback"></div></div>
+                <div class="question" data-correct="b" data-explanation-correct="Correct! After 'need', use infinitive." data-explanation-wrong="The correct answer is 'to collect'."><div class="question-text">6. Managers need __________ employee feedback regularly.</div><div class="options"><label class="option"><input type="radio" name="q16" value="a"> collect</label><label class="option"><input type="radio" name="q16" value="b"> to collect</label><label class="option"><input type="radio" name="q16" value="c"> collecting</label></div><div class="feedback"></div></div>
+                <div class="question" data-correct="a" data-explanation-correct="Correct! After 'may', use base form." data-explanation-wrong="The correct answer is 'provide'."><div class="question-text">7. The supervisor may __________ additional training sessions.</div><div class="options"><label class="option"><input type="radio" name="q17" value="a"> provide</label><label class="option"><input type="radio" name="q17" value="b"> to provide</label><label class="option"><input type="radio" name="q17" value="c"> provided</label></div><div class="feedback"></div></div>
+                <div class="question" data-correct="b" data-explanation-correct="Correct! After 'in order', use infinitive." data-explanation-wrong="The correct answer is 'to demonstrate'."><div class="question-text">8. Staff were trained in order __________ the new system effectively.</div><div class="options"><label class="option"><input type="radio" name="q18" value="a"> demonstrate</label><label class="option"><input type="radio" name="q18" value="b"> to demonstrate</label><label class="option"><input type="radio" name="q18" value="c"> demonstrating</label></div><div class="feedback"></div></div>
+                <div class="question" data-correct="a" data-explanation-correct="Correct! After 'must', use base form." data-explanation-wrong="The correct answer is 'improve'."><div class="question-text">9. We must __________ our production processes this year.</div><div class="options"><label class="option"><input type="radio" name="q19" value="a"> improve</label><label class="option"><input type="radio" name="q19" value="b"> to improve</label><label class="option"><input type="radio" name="q19" value="c"> improved</label></div><div class="feedback"></div></div>
+                <div class="question" data-correct="b" data-explanation-correct="Correct! After 'so as', use infinitive." data-explanation-wrong="The correct answer is 'to gather'."><div class="question-text">10. The team worked overtime so as __________ all necessary data.</div><div class="options"><label class="option"><input type="radio" name="q20" value="a"> gather</label><label class="option"><input type="radio" name="q20" value="b"> to gather</label><label class="option"><input type="radio" name="q20" value="c"> gathering</label></div><div class="feedback"></div></div>
+                <div class="question" data-correct="a" data-explanation-correct="Correct! After 'should', use base form." data-explanation-wrong="The correct answer is 'lower'."><div class="question-text">11. Proper ventilation should __________ energy expenses.</div><div class="options"><label class="option"><input type="radio" name="q21" value="a"> lower</label><label class="option"><input type="radio" name="q21" value="b"> be lowered</label><label class="option"><input type="radio" name="q21" value="c"> to lower</label></div><div class="feedback"></div></div>
+                <div class="question" data-correct="b" data-explanation-correct="Correct! After 'in order', use infinitive." data-explanation-wrong="The correct answer is 'to address'."><div class="question-text">12. Technicians were briefed in order __________ all safety concerns properly.</div><div class="options"><label class="option"><input type="radio" name="q22" value="a"> address</label><label class="option"><input type="radio" name="q22" value="b"> to address</label><label class="option"><input type="radio" name="q22" value="c"> addressing</label></div><div class="feedback"></div></div>
                 <button class="btn btn-primary" onclick="checkExercise3()">Check Answers</button>
                 <button class="btn btn-secondary" onclick="resetExercise3()">Reset</button>
                 <div id="ex3Score" class="score-display" style="display:none;"></div>
@@ -814,118 +854,82 @@
             });
         }
 
-        let draggedElement = null;
+        let selectedWordElement = null;
 
         function initDragDrop() {
-            const draggables = document.querySelectorAll('.draggable-word');
+            const words = document.querySelectorAll('.draggable-word');
             const dropZones = document.querySelectorAll('.drop-zone');
-            draggables.forEach(word => {
-                word.addEventListener('dragstart', handleDragStart);
-                word.addEventListener('dragend', handleDragEnd);
+
+            words.forEach(word => {
+                word.addEventListener('click', handleWordClick);
             });
-
-        // Optimized touch support for mobile (iOS Safari) - hardware accelerated
-        let touchStartX, touchStartY, touchedElement, dropZoneCache;
-
-        draggables.forEach(word => {
-            word.addEventListener('touchstart', function(e) {
-                touchedElement = this;
-                this.classList.add('dragging');
-                const touch = e.touches[0];
-                touchStartX = touch.clientX;
-                touchStartY = touch.clientY;
-                e.preventDefault();
-
-                // Cache drop zones for performance
-                dropZoneCache = Array.from(document.querySelectorAll('.drop-zone'));
-            }, { passive: false });
-
-            word.addEventListener('touchmove', function(e) {
-                e.preventDefault();
-                const touch = e.touches[0];
-                const moveX = touch.clientX - touchStartX;
-                const moveY = touch.clientY - touchStartY;
-
-                // Use translate3d for GPU hardware acceleration (much faster)
-                this.style.transform = `translate3d(${moveX}px, ${moveY}px, 0)`;
-                this.style.zIndex = '1000';
-                this.style.willChange = 'transform';
-            }, { passive: false });
-
-            word.addEventListener('touchend', function(e) {
-                e.preventDefault();
-                this.classList.remove('dragging');
-                this.style.transform = '';
-                this.style.zIndex = '';
-                this.style.willChange = '';
-
-                const touch = e.changedTouches[0];
-
-                // Find drop zone at touch position
-                const dropZone = dropZoneCache.find(zone => {
-                    const rect = zone.getBoundingClientRect();
-                    return touch.clientX >= rect.left && touch.clientX <= rect.right &&
-                           touch.clientY >= rect.top && touch.clientY <= rect.bottom;
-                });
-
-                if (dropZone && touchedElement) {
-                    const section = dropZone.getAttribute('data-section');
-                    if (dropZone.children.length > 0) {
-                        const existingWord = dropZone.children[0];
-                        document.getElementById(section + 'Bank').appendChild(existingWord);
-                    }
-                    dropZone.appendChild(touchedElement);
-                }
-
-                touchedElement = null;
-            }, { passive: false });
-        });
 
             dropZones.forEach(zone => {
-                zone.addEventListener('dragover', handleDragOver);
-                zone.addEventListener('drop', handleDrop);
-                zone.addEventListener('dragleave', handleDragLeave);
+                zone.addEventListener('click', handleZoneClick);
+            });
+
+            // Clicking elsewhere deselects
+            document.addEventListener('click', function(e) {
+                if(!e.target.closest('.draggable-word') && !e.target.closest('.drop-zone')) {
+                    if(selectedWordElement) {
+                        selectedWordElement.classList.remove('selected-word');
+                        selectedWordElement = null;
+                    }
+                }
             });
         }
 
-        function handleDragStart(e) {
-            draggedElement = this;
-            this.classList.add('dragging');
-            e.dataTransfer.effectAllowed = 'move';
-            e.dataTransfer.setData('text/html', this.innerHTML);
-        }
+        function handleWordClick(e) {
+            e.stopPropagation();
+            const word = this;
 
-        function handleDragEnd(e) {
-            this.classList.remove('dragging');
-        }
-
-        function handleDragOver(e) {
-            if (e.preventDefault) {
-                e.preventDefault();
+            // If it's already in a drop zone, move it back to bank
+            if (word.parentElement.classList.contains('drop-zone')) {
+                const section = word.parentElement.getAttribute('data-section');
+                document.getElementById('bank' + section).appendChild(word);
+                if (selectedWordElement === word) {
+                    word.classList.remove('selected-word');
+                    selectedWordElement = null;
+                }
+                return;
             }
-            e.dataTransfer.dropEffect = 'move';
-            this.classList.add('drag-over');
-            return false;
-        }
 
-        function handleDragLeave(e) {
-            this.classList.remove('drag-over');
-        }
-
-        function handleDrop(e) {
-            if (e.stopPropagation) {
-                e.stopPropagation();
+            // If it's in a bank, select or deselect it
+            if (selectedWordElement === word) {
+                word.classList.remove('selected-word');
+                selectedWordElement = null;
+            } else {
+                if (selectedWordElement) {
+                    selectedWordElement.classList.remove('selected-word');
+                }
+                selectedWordElement = word;
+                word.classList.add('selected-word');
             }
-            this.classList.remove('drag-over');
-            if (draggedElement) {
-                const section = this.getAttribute('data-section');
-                if (this.children.length > 0) {
-                    const existingWord = this.children[0];
+        }
+
+        function handleZoneClick(e) {
+            e.stopPropagation();
+            const zone = this;
+            if (selectedWordElement) {
+                // If there is already a word, send it back to its bank
+                if (zone.children.length > 0) {
+                    const existingWord = zone.children[0];
+                    const section = zone.getAttribute('data-section');
                     document.getElementById('bank' + section).appendChild(existingWord);
                 }
-                this.appendChild(draggedElement);
+                zone.appendChild(selectedWordElement);
+                zone.style.borderColor = '#667eea'; // reset any error borders
+                zone.style.background = '#f0f4ff';
+                selectedWordElement.classList.remove('selected-word');
+                selectedWordElement = null;
+            } else {
+                // If no word is selected but they click a zone with a word in it
+                if (zone.children.length > 0) {
+                    const existingWord = zone.children[0];
+                    const section = zone.getAttribute('data-section');
+                    document.getElementById('bank' + section).appendChild(existingWord);
+                }
             }
-            return false;
         }
 
         function checkAllDragDrop() {
